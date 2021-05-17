@@ -18,7 +18,8 @@ class PostViewSet(viewsets.ModelViewSet):
 
     def partial_update(self, request, pk=None):
         post = self.queryset.get(id=pk)
-        serializer = self.serializer_class(post, data=request.data, partial=True)
+        serializer = self.serializer_class(post, data=request.data,
+                                           partial=True)
         if serializer.is_valid() and post.author == request.user:
             serializer.save(author=request.user)
             return Response(serializer.data, status=status.HTTP_200_OK)
@@ -45,11 +46,11 @@ class CommentViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
 
-
     def partial_update(self, request, *args, **kwargs):
         post = get_object_or_404(Post, id=self.kwargs['post_id'])
         comment = post.comments.get(id=self.kwargs['pk'])
-        serializer = CommentSerializer(comment, data=request.data, partial=True)
+        serializer = CommentSerializer(comment, data=request.data,
+                                       partial=True)
         if serializer.is_valid() and request.user == comment.author:
             serializer.save(author=request.user)
             return Response(serializer.data, status=status.HTTP_200_OK)
