@@ -4,19 +4,16 @@ from .models import Post, Comment
 
 
 class PostSerializer(serializers.ModelSerializer):
-    author = serializers.CharField(source='author.username')
+    author = serializers.StringRelatedField()
 
     class Meta:
-        fields = ('id', 'author', 'text', 'image', 'pub_date')
+        fields = '__all__'
         model = Post
 
 
 class CommentSerializer(serializers.ModelSerializer):
-    author = serializers.SlugRelatedField(
-        slug_field='username',
-        read_only=True
-    )
+    author = serializers.StringRelatedField()
 
     class Meta:
-        fields = ('id', 'author', 'post', 'text', 'created')
+        fields = '__all__'
         model = Comment

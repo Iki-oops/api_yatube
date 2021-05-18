@@ -6,12 +6,17 @@ from rest_framework.response import Response
 
 from .models import Post, Comment
 from .serializers import PostSerializer, CommentSerializer
+# from .permissions import CustomPermission
 
 
 class PostViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [IsAuthenticatedOrReadOnly,]
     queryset = Post.objects.all()
     serializer_class = PostSerializer
+    # А как вернуть статус 403
+    # permission_classes_by_action = {
+    #     'partial_update': [CustomPermission,],
+    # }
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
@@ -34,7 +39,6 @@ class PostViewSet(viewsets.ModelViewSet):
 
 
 class CommentViewSet(viewsets.ModelViewSet):
-    queryset = Comment.objects.all()
     serializer_class = CommentSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
 

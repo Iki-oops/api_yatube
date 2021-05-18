@@ -150,3 +150,5 @@ static/
 posts/static/
 media/
 
+# slug_field='username',
+# read_only=True
