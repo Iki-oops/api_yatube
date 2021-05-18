@@ -8,7 +8,8 @@ PREFIX = 'api'
 
 router = DefaultRouter()
 router.register('posts', PostViewSet)
-router.register('posts/(?P<post_id>[0-9]+)/comments', CommentViewSet, basename='comment')
+router.register('posts/(?P<post_id>[0-9]+)/comments', CommentViewSet,
+                basename='comment')
 
 urlpatterns = [
     path(f'{PREFIX}/v1/', include(router.urls)),
