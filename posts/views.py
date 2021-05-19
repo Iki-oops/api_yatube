@@ -9,7 +9,7 @@ from .permissions import CustomPermission
 
 
 class PostViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticatedOrReadOnly & CustomPermission]
+    permission_classes = [IsAuthenticatedOrReadOnly, CustomPermission]
     queryset = Post.objects.all()
     serializer_class = PostSerializer
 
@@ -19,7 +19,7 @@ class PostViewSet(viewsets.ModelViewSet):
 
 class CommentViewSet(viewsets.ModelViewSet):
     serializer_class = CommentSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly & CustomPermission]
+    permission_classes = [IsAuthenticatedOrReadOnly, CustomPermission]
 
     def get_queryset(self):
         post = get_object_or_404(Post, id=self.kwargs['post_id'])
